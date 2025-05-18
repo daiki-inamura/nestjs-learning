@@ -1,8 +1,19 @@
 import { Injectable } from '@nestjs/common';
 
+const data = [
+  {name:'taro', mail:'taro@yamada', age:39},
+  {name:'hanako', mail:'hanako@yflowewr', age:26},
+  {name:'sachiko', mail:'saghiko@yhappy', age:17}
+]
+
 @Injectable()
 export class AppService {
-  getHello(): string {
-    return 'Hello World!';
+  getHello(id:number): object {
+    const n=id < 0 ? 0 : id >= data.length ? data.length - 1 : id;
+    return {
+      id:n,
+      data:data[n],
+      created:new Date()
+    };
   }
 }
