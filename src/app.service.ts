@@ -1,4 +1,5 @@
 import { Injectable } from '@nestjs/common';
+import FormData from './formdata';
 
 const data = [
   {name:'taro', mail:'taro@yamada', age:39},
@@ -15,5 +16,9 @@ export class AppService {
       data:data[n],
       created:new Date()
     };
+  }
+
+  addData (frm:FormData) {
+    data.push(frm)
   }
 }
