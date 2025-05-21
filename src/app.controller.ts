@@ -1,7 +1,10 @@
-import { Controller, Param, Body, Get, Post } from '@nestjs/common';
+import { Controller, Render, Param, Body, Get, Post } from '@nestjs/common';
 import { AppService } from './app.service';
 import FormData from './formdata';
+import { title } from 'process';
+import MsgData from './Msgdata';
 
+const msgs: MsgData[] = []
 @Controller()
 export class AppController {
   constructor(private readonly appService: AppService) {}
@@ -14,6 +17,29 @@ export class AppController {
   @Get('/hello/:id')
   getHelloById(@Param('id') id: string): object {
     return this.appService.getHello(Number(id));
+  }
+
+  @Get()
+  @Render('index')
+  index() {
+    console.log(msgs)
+    return {
+      title: 'Nest-JS-MVC',
+      message: 'NestJS + hbs = MVC application!',
+      data: msgs
+    }
+  }
+
+  @Post()
+  @Render('index')
+  form(@Body() msg:MsgData) {
+    msg.posted = new Date()
+    msgs.unshift(msg)
+    return {
+      title: 'NestJS-MVC',
+      message: 'posted:' + JSON.stringify(msg),
+      data:msgs
+    }
   }
 
   @Post('/hello/post')

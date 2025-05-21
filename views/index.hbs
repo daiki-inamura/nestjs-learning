@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>{{title}}</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  </head>
+  <body class="container mt-2">
+    {{>header}}
+    <form method="post" action="/">
+      <div class="mb-3">
+        <label for="msg" class="form-label">Message</label>
+        <input type="text" class="form-control" 
+          id="msg" name="msg">
+      </div>
+      <div class="mb-3">
+        <label for="name" class="form-label">Name</label>
+        <input type="text" class="form-control" 
+          id="name" name="name">
+      </div>
+      <button type="submit" class="btn btn-secondary">送信</button>
+    </form>
+    <table class="table">
+  <thead>
+    <tr><th>Message</th><th>Name</th><th>posted</th></tr>
+  </thead>
+  <tbody>
+    {{#each data}}
+      <tr>
+        <td>{{msg}}</td>
+        <td>{{name}}</td>
+        <td>{{posted}}</td>
+      </tr>
+    {{/each}}
+  </tbody>
+</table>
+    {{>footer}}
+  </body>
+</html>
