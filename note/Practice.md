@@ -13,16 +13,23 @@
 - 依存性注入（DI）とデコレーターの役割
 
 ### 📝 ToDoリスト
-- [ ] Nest CLIのインストールとプロジェクト作成
-- [ ] AppControllerにルーティングを追加（例：`GET /hello`）
-- [ ] Serviceでデータ生成・加工処理を作成
-- [ ] `@Param()` を使ったルートパラメータの受け取り
+- [x] Nest CLIのインストールとプロジェクト作成
+- [x] AppControllerにルーティングを追加（例：`GET /hello`）
+- [x] Serviceでデータ生成・加工処理を作成
+- [x] `@Param()` を使ったルートパラメータの受け取り
 
 ### 🧠 復習問題
 1. Nest CLIで新しいプロジェクトを作成するコマンドは？
 2. `@Controller()` と `@Get()` の役割は？
 3. サービスクラスをコントローラに注入（DI）するにはどう書く？
 4. `@Param()` デコレーターは何に使う？
+
+### 復習問題　回答
+1. nest new アプリケーション
+2. `@Controller()`：app.controller.tsで記述するデコレータ。クラスがコントローラーであることを指定する。\n
+   `@Get()`：このメソッドがHTTPプロトコルのGETメソッドによって呼び出されるアクションを示す。
+3. `constructor(private readonly appService: AppService) {}` で自動注入される
+4. `@param()`：引数がパラメーターであることを指定するもの。
 
 ### 🧪 確認用ミニ課題
 **課題：`/hello` にアクセスすると「こんにちは、NestJS！」を返すAPIを作成せよ。**
