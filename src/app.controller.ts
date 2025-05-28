@@ -1,8 +1,9 @@
-import { Controller, Render, Param, Body, Get, Post } from '@nestjs/common';
+import { Controller, Render, Param, Body, Get, Post, Session } from '@nestjs/common';
 import { AppService } from './app.service';
 import FormData from './formdata';
 import { title } from 'process';
 import MsgData from './Msgdata';
+import session from 'express-session';
 
 const msgs: MsgData[] = []
 @Controller()
@@ -21,23 +22,28 @@ export class AppController {
 
   @Get()
   @Render('index')
-  index() {
+  index(@Session() session: Record<string, any>) {
+    const username = session.username ? session.username : '（未入力）'
     console.log(msgs)
     return {
       title: 'Nest-JS-MVC',
-      message: 'NestJS + hbs = MVC application!',
+      message: 'Username: ' + username,
+      username: session.username,
+      // message: 'NestJS + hbs = MVC application!',
       data: msgs
     }
   }
 
   @Post()
   @Render('index')
-  form(@Body() msg:MsgData) {
+  form(@Body() msg:MsgData, @Session() session: Record<string, any>) {
     msg.posted = new Date()
+    session.username = msg.name
     msgs.unshift(msg)
     return {
       title: 'NestJS-MVC',
       message: 'posted:' + JSON.stringify(msg),
+      username: session.username,
       data:msgs
     }
   }

@@ -1,0 +1,10 @@
+{
+  "type": "sqlite",
+  "database": "database/db.sqlite3",
+  "entities": [
+    "dist/entities/**/*.entity.js"
+  ],
+  "migrations": [
+    "dist/migrations/**/*.js"
+  ]
+}

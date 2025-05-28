@@ -1,8 +1,10 @@
+// src/app.module.ts
 import { Module } from '@nestjs/common';
-import { AppController } from './app.controller';
-import { AppService } from './app.service';
 import { ServeStaticModule } from '@nestjs/serve-static';
 import { join } from 'path';
+import { TypeOrmModule } from '@nestjs/typeorm';
+
+import { SampledataModule } from './sampledata/sampledata.module';
 import { HelloModule } from './hello/hello.module';
 import { TaskModule } from './task/task.module';
 
@@ -11,10 +13,15 @@ import { TaskModule } from './task/task.module';
     ServeStaticModule.forRoot({
       rootPath: join(__dirname, '..', 'public'),
     }),
+    TypeOrmModule.forRoot({
+      type: 'sqlite', 
+      database: join(__dirname, '..', 'data', 'db.sqlite'), 
+      entities: [__dirname + '/**/*.entity{.ts,.js}'], 
+      synchronize: true, 
+    }),
+    SampledataModule,
     HelloModule,
     TaskModule,
   ],
-  controllers: [AppController],
-  providers: [AppService],
 })
 export class AppModule {}
