@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>NestJS</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  </head>
+  <body class="container mt-2" onload="getData()">
+    <h1 class="display-6 text-primary">
+      <strong>NestJS+TypeORM</strong>
+    </h1>
+    <div id="result" class="my-3">
+      <p id="msg">※データを検索します。</p>
+    </div>
+    <div class="mb-3">
+      <label for="find" class="form-label">Find</label>
+      <input type="text" class="form-control" 
+        id="find" name="find">
+    </div>
+    <button class="btn btn-secondary" onclick="doAction();">送信</button>
+    <hr>
+    <table class="table">
+      <thead>
+        <tr><th>Memo</th><th>Created</th></tr>
+      </thead>
+      <tbody id="tbody"></tbody>
+    </table>
+    <div class="my-3">&nbsp;</div>
+    <div style="width:100%" 
+      class="fixed-bottom bg-secondary p-1">
+      <p class="text-center text-white m-0">
+        copyright 2022 SYODA-Tuyano.</p>
+    </div>
+    <script>
+      function doAction() {
+        const find = document.querySelector('#find').value
+        const opt = {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({find:find})
+        }
+        fetch('/sampledata/find', opt)
+          .then(response => response.json())
+          .then(data => makeTable(data))
+      }
+      function makeTable(data) {
+        var result = ''
+        for (var item of data) {
+          result += `<tr><td>${item.memo}</td><td>${item.created}</td></tr>`
+        }
+        document.querySelector('#tbody').innerHTML = result
+      }
+    </script>
+  </body>
+</html>

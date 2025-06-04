@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>NestJS</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  </head>
+  <body class="container mt-2">
+    <h1 class="display-6 text-primary">
+      <strong>NestJS+TypeORM</strong>
+    </h1>
+    <div id="result" class="my-3">
+      <p id="msg">※データを削除します。</p>
+    </div>
+    <div class="mb-3">
+      <label for="id" class="form-label">ID</label>
+      <input type="number" class="form-control" 
+        id="id" name="id" onchange="doChange()">
+    </div>
+    <button class="btn btn-secondary" id="sendbtn"
+      onclick="doAction();" disabled>送信</button>
+    <div class="my-3">&nbsp;</div>
+    <div style="width:100%" 
+      class="fixed-bottom bg-secondary p-1">
+      <p class="text-center text-white m-0">
+        copyright 2022 SYODA-Tuyano.</p>
+    </div>
+    <script>
+      function doChange() {
+        const id = document.querySelector('#id').value
+        const opt = {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({id:+id})
+        }
+        fetch('/sampledata/id', opt)
+          .then(response => response.json())
+          .then(data => showData(data))
+          .catch(error => clearData() )
+      }
+
+
+      function showData(data) {
+        document.querySelector('#msg').innerHTML = '<h6>このデータを削除します。</h6>'
+          + '<div>' + JSON.stringify(data) + '</div>'
+        document.querySelector('#sendbtn').disabled = false
+      }
+      function clearData() {
+        document.querySelector('#msg').textContent = '※データを削除します。'
+        document.querySelector('#sendbtn').disabled = true
+      }
+
+
+      function doAction() {
+        const id = document.querySelector('#id').value
+        const opt = {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({id:id})
+        }
+        fetch('/sampledata/delete', opt)
+          .then(response => response.text())
+          .then(data => setData(data))
+      }
+
+
+      function setData(res) {
+        document.querySelector('#msg').textContent = '結果：' + res
+      }
+    </script>
+  </body>
+</html>

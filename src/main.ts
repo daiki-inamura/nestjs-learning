@@ -3,6 +3,8 @@ import { AppModule } from './app.module'
 import { NestExpressApplication } from '@nestjs/platform-express'
 import * as session from 'express-session'
 import { join } from 'path'
+import { ValidationPipe } from '@nestjs/common'; 
+
 const hbs = require('hbs')
 
 async function bootstrap() {
@@ -15,7 +17,14 @@ async function bootstrap() {
     secret: 'sample-secret-key',
     resave: false,
     saveUninitialized: false,
-  }))
+  }));
+  app.useGlobalPipes(
+    new ValidationPipe({
+      whitelist: true,
+      forbidNonWhitelisted: true,
+      transform: true,
+    }),
+  );
   hbs.registerPartials(join(__dirname, '..','views','partials'))
   await app.listen(3000)
 }

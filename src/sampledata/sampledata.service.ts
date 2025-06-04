@@ -1,6 +1,6 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { InsertResult, Repository } from 'typeorm';
+import { DeleteResult, InsertResult, Repository, Like } from 'typeorm';
 import { Sampledata } from 'src/entities/sampledata.entity';
 
 @Injectable()
@@ -33,4 +33,14 @@ export class SampledataService {
         entity.url = data.url
         return await this.sampledataRepository.save(entity)
     }
+
+    async delete(data:any):Promise<DeleteResult> {
+      return await this.sampledataRepository.delete(data.id)
+    }
+
+async find(data: { find: string }): Promise<Sampledata[]> {
+  return this.sampledataRepository.find({
+    where: { memo: Like(`%${data.find}%`) }, 
+  });
+}
 }
