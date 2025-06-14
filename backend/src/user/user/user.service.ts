@@ -26,7 +26,7 @@ export class UserService {
     async remove(id: number): Promise<void> {
         const result = await this.userdateRepository.delete(id);
         if(result.affected === 0) {
-            throw new NotFoundException(`User with id=${id} not found.`)
+            throw new NotFoundException(`User with id=${id} not found.`);
         }
     }
 
@@ -34,12 +34,10 @@ export class UserService {
     async update(id: number, date: UpdateUserDto): Promise<Userdata> {
         // 該当レコードを取得
         const user = await this.userdateRepository.findOne({where: {id}});
-        if(!user) {
+        if (!user) {
             throw new NotFoundException(`User with id=${id} not found`);
         }
         this.userdateRepository.merge(user, date);
-
         return this.userdateRepository.save(user);
     }
-    
 }

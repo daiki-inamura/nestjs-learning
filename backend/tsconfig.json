@@ -16,6 +16,17 @@
     "forceConsistentCasingInFileNames": true,
     "noImplicitAny": false,
     "strictBindCallApply": false,
-    "noFallthroughCasesInSwitch": false
-  }
+    "noFallthroughCasesInSwitch": false,
+    "types": ["node", "jest"],
+    "moduleResolution": "node"
+  },
+  "include": [
+   "src/**/*.ts",             // 実装ファイル
+   "src/**/*.spec.ts",        // src 配下の spec
+   "test/**/*.spec.ts"        // （もし test フォルダも使うなら）
+  ],
+  "exclude": [
+    "node_modules",
+    "dist"
+  ]
 }
